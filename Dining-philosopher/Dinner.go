@@ -7,7 +7,7 @@ type Dinner struct {
 }
 
 func Make_dinner(d *Dinner) {
-	d.Names = [5]string{"Asger", "Jovana", "Bjærn", "Anna", "Ogge"}
+	d.Names = [5]string{"Asger", "Jovana", "Jojo", "Marco", "Thore"}
 
 	for i := 0; i < len(d.Names); i++ {
 		forks := create_fork(i)

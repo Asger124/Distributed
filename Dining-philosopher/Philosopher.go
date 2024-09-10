@@ -32,14 +32,6 @@ func (p *philosopher) InitiatePhilosopher() {
 
 		if !<-p.fork_left.inUse && !<-p.fork_right.inUse {
 
-			//p.fork_left.inUse <- true
-
-			//stateright := <-p.fork_right.inUse
-
-			// if !<-p.fork_right.inUse {
-
-			// 	p.fork_right.inUse <- true
-
 			p.timesEating++
 			fmt.Printf("%s Are currently eating and has eaten %d times\n", p.Name, p.timesEating)
 			time.Sleep(time.Millisecond * time.Duration(rand.Intn(4500)))
@@ -60,7 +52,6 @@ func (p *philosopher) InitiatePhilosopher() {
 				p.fork_right.inUse <- false
 			}
 
-			// Wait for a short time before retrying
 			time.Sleep(time.Millisecond * time.Duration(rand.Intn(1000)))
 		}
 
