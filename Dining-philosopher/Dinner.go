@@ -1,41 +1,41 @@
 package main
 
 type Dinner struct {
-	P     []*philosopher
-	F     []*fork
-	Names [5]string
+	Philosophers []*philosopher
+	Forks        []*fork
+	Names        [5]string
 }
 
-func Make_dinner(d *Dinner) {
-	d.Names = [5]string{"Asger", "Jovana", "Jojo", "Marco", "Thore"}
+func Make_dinner(dinner *Dinner) {
+	dinner.Names = [5]string{"Asger", "Jovana", "Jojo", "Marco", "Thore"}
 
-	for i := 0; i < len(d.Names); i++ {
-		forks := create_fork(i)
+	for i := 0; i < len(dinner.Names); i++ {
+		forks_for_dinner := create_fork(i)
 
-		d.F = append(d.F, forks)
+		dinner.Forks = append(dinner.Forks, forks_for_dinner)
 
 	}
 
-	for i := 0; i < len(d.Names); i++ {
+	for i := 0; i < len(dinner.Names); i++ {
 
-		philosopher := makePhilosopher(d.Names[i], d.F[i], (d.F[(i+1)%(len(d.Names))]))
+		philosopher := makePhilosopher(dinner.Names[i], dinner.Forks[i], (dinner.Forks[(i+1)%(len(dinner.Names))]))
 
-		d.P = append(d.P, philosopher)
+		dinner.Philosophers = append(dinner.Philosophers, philosopher)
 	}
 
 }
 
-func (d *Dinner) Start() {
+func (dinner *Dinner) Start() {
 
-	for i := 0; i < len(d.Names); i++ {
+	for i := 0; i < len(dinner.Names); i++ {
 
-		go d.F[i].grant_fork()
+		go dinner.Forks[i].grant_fork()
 
 	}
 
-	for i := 0; i < len(d.Names); i++ {
+	for i := 0; i < len(dinner.Names); i++ {
 
-		go d.P[i].InitiatePhilosopher()
+		go dinner.Philosophers[i].InitiatePhilosopher()
 
 	}
 

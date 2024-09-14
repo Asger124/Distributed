@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"sync"
 )
 
@@ -12,8 +13,9 @@ func main() {
 
 	Make_dinner(&dinner)
 
-	wg.Add(15)
+	wg.Add(1)
 	dinner.Start()
+	fmt.Println("philosphers", dinner.Philosophers[0].fork_left.Occupied, dinner.Philosophers[0].fork_right.Occupied)
 	wg.Wait()
 
 }
