@@ -1,4 +1,4 @@
-# Dining Philosphers
+# Dining Philosophers
 
 HOW TO RUN THE PROGRAM 
 
