@@ -38,7 +38,7 @@ e) Why is the 3-way handshake important?
     which helps to providea reliable data transmission.
 
     
-    //HOW TO RUN:
+//HOW TO RUN:
 
-    From the terminal navigate to the folder \Distributed\Tcp.   
-    When in the folder Tcp, write: 'go run .'
+From the terminal navigate to the folder \Distributed\Tcp.   
+When in the folder Tcp, write: 'go run .'
