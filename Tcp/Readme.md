@@ -40,5 +40,5 @@ e) Why is the 3-way handshake important?
     
 //HOW TO RUN:
 
-From the terminal navigate to the folder \Distributed\Tcp.   
+From the terminal navigate to the folder \Tcp.   
 When in the folder Tcp, write: 'go run .'

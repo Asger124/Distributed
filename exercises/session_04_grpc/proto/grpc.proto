@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+option go_package = "example.com/session_04_grpc/proto";
+
+
+// Define the Student service
+service StudentService {
+    rpc GetStudent (StudentRequest) returns (StudentResponse);
+    rpc AddStudent (AddStudentRequest) returns (StudentResponse);
+}
+
+// Define the Teacher service
+service TeacherService {
+    rpc GetTeacher (TeacherRequest) returns (TeacherResponse);
+    rpc AddTeacher (AddTeacherRequest) returns (TeacherResponse);
+}
+
+// Define the Course service
+service CourseService {
+    rpc GetCourse (CourseRequest) returns (CourseResponse);
+    rpc AddCourse (AddCourseRequest) returns (CourseResponse);
+}
+
+// Message types for Student
+message StudentRequest {
+    int32 id = 1;
+}
+
+message AddStudentRequest {
+    string name = 1;
+    int32 age = 2;
+}
+
+message StudentResponse {
+    int32 id = 1;
+    string name = 2;
+    int32 age = 3;
+}
+
+// Message types for Teacher
+message TeacherRequest {
+    int32 id = 1;
+}
+
+message AddTeacherRequest {
+    string name = 1;
+    string subject = 2;
+}
+
+message TeacherResponse {
+    int32 id = 1;
+    string name = 2;
+    string subject = 3;
+}
+
+// Message types for Course
+message CourseRequest {
+    int32 id = 1;
+}
+
+message AddCourseRequest {
+    string name = 1;
+    string description = 2;
+}
+
+message CourseResponse {
+    int32 id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+
+//protoc --go_out=paths=source_relative:. --go-grpc_out=paths=source_relative:. grpc.proto

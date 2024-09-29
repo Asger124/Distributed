@@ -2,7 +2,7 @@
 
 HOW TO RUN THE PROGRAM 
 
-From the terminal navigate to the folder \Distributed\Dining-philosopher. 
+From the terminal navigate to the folder \Dining-philosopher. 
 When in the folder Dining-philosopher, write: go run . in the terminal. 
 the program will run indefinetly - to exit the program press Ctrl + C. 
 
