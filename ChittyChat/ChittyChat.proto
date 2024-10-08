@@ -1,0 +1,35 @@
+syntax = "proto3"; 
+
+package ChittyChat; 
+
+
+message MessageRequest{
+    string message = 1; // message
+    string userName = 2; // the clients name 
+}
+
+message MessageResponse {
+    string message = 1; // the clients message
+    int64 lamport_time = 2; // get the local time 
+    //string userName = 2; Maybe relevant in the future :)))))))
+}
+
+message JoinRequest{
+    string userName = 1; // when want to join then register the client name
+}
+
+message JoinResponse {
+    string joinMsg = 1;  // message that a client has joined
+    int64 lamport_time = 2; // get the localtime that the client joined
+}
+
+
+
+service ChittyChatService {
+
+    //Client can publish a message
+    rpc PublishMessage(MessageRequest) returns (MessageResponse); 
+    
+    // Client joins the chat and listens to the stream of messages
+    rpc ChatStream (JoinRequest) returns (stream MessageResponse);
+}
