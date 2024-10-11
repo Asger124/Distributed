@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "example.com/session_05_time/proto";
+
+service timeService {
+
+rpc getTime (timerequest) returns (timeresponse);
+    
+}
+
+message timerequest {
+
+}
+
+message timeresponse {
+    string time = 1; 
+}
+
