@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option go_package = "example.com/Chitty_Chat/proto";
+
+service Chitty_Chat {
+
+    rpc Broadcast (Participant) returns (stream message);
+    rpc Publish (message) returns (empty);     
+    rpc Leave (Participant) returns (empty);   
+    }
+
+    message empty {}
+
+    
+    message msg {
+        string msg = 1;
+        string name = 2;
+    }
+    
+    message Participant {
+        string name = 1; 
+    
+    }
+    
+    message message {
+        string message = 1;
+        Participant par = 2;
+        uint32 LamportTime = 3;
+    }
+    //protoc --go_out=paths=source_relative:. --go-grpc_out=paths=source_relative:. chittychat.proto
