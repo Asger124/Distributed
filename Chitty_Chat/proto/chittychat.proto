@@ -10,12 +10,6 @@ service Chitty_Chat {
     }
 
     message empty {}
-
-    
-    message msg {
-        string msg = 1;
-        string name = 2;
-    }
     
     message Participant {
         string name = 1; 

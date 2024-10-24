@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"strconv"
 
 	pb "example.com/Chitty_Chat/proto"
 	"google.golang.org/grpc"
@@ -29,7 +28,7 @@ func (s *Server) Broadcast(par *pb.Participant, stream pb.Chitty_Chat_BroadcastS
 	s.ServerLamport++
 	log.Printf("-> Participant %v joined Chitty-Chat at Lamport time %v", par.Name, s.ServerLamport)
 
-	lamportString := strconv.FormatInt(int64(s.ServerLamport), 10)
+	//lamportString := strconv.FormatInt(int64(s.ServerLamport), 10)
 
 	NewParticipant := &Participant{
 		Participant: par,
@@ -39,7 +38,7 @@ func (s *Server) Broadcast(par *pb.Participant, stream pb.Chitty_Chat_BroadcastS
 	s.participants = append(s.participants, NewParticipant)
 
 	Join := &pb.Message{
-		Message:     "Joined Chitty-Chat at Lamport time " + lamportString,
+		Message:     "Joined Chitty-Chat",
 		Par:         par,
 		LamportTime: s.ServerLamport,
 	}
@@ -84,10 +83,10 @@ func (s *Server) Leave(ctx context.Context, par *pb.Participant) (*pb.Empty, err
 
 	log.Printf("-> Participant %v Left Chitty-Chat at Lamport time %v", par.Name, s.ServerLamport)
 
-	lamportString := strconv.FormatInt(int64(s.ServerLamport), 10)
+	//lamportString := strconv.FormatInt(int64(s.ServerLamport), 10)
 
 	Leave := &pb.Message{
-		Message:     "Left Chitty-Chat at Lamport time " + lamportString,
+		Message:     "Left Chitty-Chat",
 		Par:         par,
 		LamportTime: s.ServerLamport,
 	}
