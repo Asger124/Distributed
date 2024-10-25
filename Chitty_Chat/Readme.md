@@ -10,6 +10,6 @@
 
 - open a terminal 
 - Navigate to Chitty_Chat/Client folder 
-- type in the following command: go run . -name <a name> 
+- type in the following command: go run . -name < a name >
 
 You can run as many clients as you like - using different terminals
