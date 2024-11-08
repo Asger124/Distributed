@@ -1,11 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"log"
 	"net"
-	"time"
+	"os"
 
 	pb "example.com/Mutual_Exclusion/proto"
 	"google.golang.org/grpc"
@@ -45,23 +46,23 @@ func (p *peer) StartServer() {
 	}
 }
 func (p *peer) StartClient() {
-	var conn *grpc.ClientConn
-	//var err error
 
-	for {
-		_, err := grpc.Dial(p.p_next.address, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial(p.p_next.address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 
-		if err == nil {
-			break
-		}
-		log.Printf("Peer %d: Failed to connect to peer %d at %s, retrying...", p.id, p.p_next.id, p.p_next.address)
-		time.Sleep(2 * time.Second)
+	if err != nil {
+		log.Printf("Failed to connect to peer %s: %v", p.p_next.address, err)
+		return
 	}
+	defer conn.Close()
 	p.cient = pb.NewTokenRingClient(conn)
-	log.Printf("Peer %d: Successfully connected to peer %d at %s", p.id, p.p_next.id, p.p_next.address)
+	log.Printf("Node %d has connected to node %d", p.id, p.p_next.id)
+
 }
 
-func (p *peer) passToken()
+func (p *peer) EnterCs() {
+
+	Token := <-p.token_chan
+}
 
 func main() {
 
@@ -83,6 +84,13 @@ func main() {
 
 		num_peers[i].p_next = num_peers[(i+1)%len(num_peers)]
 
+	}
+
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		if scanner.Text() == "Connect" {
+			num_peers[*number].StartClient()
+		}
 	}
 
 	select {}
