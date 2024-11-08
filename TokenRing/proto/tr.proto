@@ -1,0 +1,23 @@
+syntax = "proto3"; 
+
+package TokenRing; 
+option go_package = "TokenRing/proto";
+
+message TokenId {
+
+    int32 tokenid = 1; 
+
+}
+
+message ReceivedToken {
+
+    string receivedtoken = 1; 
+}
+
+service TokenService {
+
+    rpc WhenReceivedToken(TokenId) returns (ReceivedToken); 
+
+}
+
+
