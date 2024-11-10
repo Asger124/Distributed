@@ -3,15 +3,15 @@ syntax = "proto3";
 option go_package = "example.com/Mutual_Exclusion/proto";
 
 service TokenRing {
-    rpc passToken(Token) returns (Ack); 
+    rpc receiveToken(Token) returns (Empty); 
 }
 
 message Token {
-    uint32 node_id = 1; 
+    string message = 1; 
 }
 
-message Ack {
-    bool success = 1; 
+message Empty {
+     
 }
 
 

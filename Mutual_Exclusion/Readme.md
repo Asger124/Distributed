@@ -1,0 +1,7 @@
+# How to run Program
+
+-open a terminal and navigate to the Mutual_Exclusion folder
+-From the terminal write go run . 
+-If successfull instructions will appear in the terminal 
+-Follow the instructions 
+-Press ctrl + c to quit the program
