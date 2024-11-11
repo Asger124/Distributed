@@ -10,7 +10,7 @@ import (
 	"os"
 	"time"
 
-	pb "example.com/Mutual_Exclusion/proto"
+	pb "example.com/Mutual_Exclusion/Proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -43,9 +43,9 @@ func (p *peer) StartServer() {
 	}
 
 	p.server = grpc.NewServer()
-	pb.RegisterTokenRingServer(p.server, p) // Register this node as a PeerServer
+	pb.RegisterTokenRingServer(p.server, p)
 
-	log.Printf("Node %d listening on %s\n", p.id, p.address)
+	//log.Printf("Node %d listening on %s\n", p.id, p.address)
 	if err := p.server.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}
@@ -68,7 +68,7 @@ func (p *peer) ReceiveToken(ctx context.Context, msg *pb.Token) (*pb.Empty, erro
 	// Simulate critical section work
 	time.Sleep(time.Second)
 
-	// Pass token to the next peer in the ring
+	// Token is passed into peers channel
 
 	p.token_chan <- msg
 	return &pb.Empty{}, nil
@@ -81,7 +81,7 @@ func (p *peer) simulateRequest() {
 			// Wait for a random interval before making a request
 			time.Sleep(time.Duration(rand.Intn(10)+8) * time.Second)
 			p.request = true
-			log.Printf("Node %d is requesting to enter critical section", p.id)
+			log.Printf("Node %d is requesting access critical section", p.id)
 		} else {
 			time.Sleep(time.Second)
 		}
@@ -90,6 +90,7 @@ func (p *peer) simulateRequest() {
 
 func (p *peer) EnterCs_andPasstoken() {
 	for {
+		//This will block until a token is received from another go routine. receiveToken() is what makes this section unblock
 		token := <-p.token_chan
 		time.Sleep(time.Second)
 		log.Printf("Node %d got %s\n", p.id, token.Message)
@@ -97,9 +98,9 @@ func (p *peer) EnterCs_andPasstoken() {
 		if p.request {
 			log.Printf("Node %d is entering critical section", p.id)
 			// Simulate critical section work
-			time.Sleep(3 * time.Second) // Critical section time
+			time.Sleep(3 * time.Second)
 			log.Printf("Node %d is leaving critical section", p.id)
-			p.request = false // Reset request flag after CS exit
+			p.request = false
 		}
 
 		time.Sleep(time.Second)

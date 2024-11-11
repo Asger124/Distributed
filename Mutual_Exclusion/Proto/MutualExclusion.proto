@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "example.com/Mutual_Exclusion/proto";
+option go_package = "example.com/Mutual_Exclusion/Proto";
 
 service TokenRing {
     rpc receiveToken(Token) returns (Empty); 

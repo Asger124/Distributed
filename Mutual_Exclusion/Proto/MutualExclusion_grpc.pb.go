@@ -4,7 +4,7 @@
 // - protoc             v3.21.7
 // source: MutualExclusion.proto
 
-package proto
+package Proto
 
 import (
 	context "context"
