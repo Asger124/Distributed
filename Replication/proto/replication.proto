@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option go_package = "example.com/Replication/proto";
+
+message Amount {
+    uint32 clientID = 1; 
+    uint32 amount = 2;
+
+}
+
+message Ack {
+    string ack = 1; 
+   
+}
+
+message Void {
+    uint32 clientID = 1;
+
+}
+
+message Outcome {
+    string outcome = 1; 
+
+}
+
+service Auction {
+    rpc Bid(Amount) returns (Ack);
+    rpc Result(Void) returns (Outcome);
+
+}
+
+//protoc --go_out=paths=source_relative:. --go-grpc_out=paths=source_relative:. replication.proto
