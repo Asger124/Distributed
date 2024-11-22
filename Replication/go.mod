@@ -1,4 +1,4 @@
-module example.com/Replication/proto
+module example.com/Replication
 
 go 1.19
 
