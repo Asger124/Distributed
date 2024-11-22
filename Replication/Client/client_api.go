@@ -9,11 +9,11 @@ import (
 	pb "example.com/Replication/proto"
 )
 
-func ClientBids(ctx context.Context, bid uint32, c *Client) {
+func ClientBids(ctx context.Context, bid int32, c *Client) {
 
 	request := pb.Amount{
-		ClientID: c.id,
-		Amount:   bid,
+		ClientID: uint32(c.id),
+		Amount:   uint32(bid),
 	}
 
 	response := &pb.Ack{}
@@ -67,7 +67,7 @@ func ClientBids(ctx context.Context, bid uint32, c *Client) {
 func AskForState(ctx context.Context, c *Client) {
 
 	request := pb.Void{
-		ClientID: c.id}
+		ClientID: uint32(c.id)}
 
 	response := &pb.Outcome{}
 

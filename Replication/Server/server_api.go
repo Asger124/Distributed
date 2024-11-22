@@ -15,7 +15,7 @@ func (s *Server) Bid(ctx context.Context, amount *pb.Amount) (*pb.Ack, error) {
 	if s.lamportstamp == 0 && !s.auctionisactive {
 
 		log.Printf("AUCTION HAS BEGUN DUE TO CLIENT WITH ID %d MAKING THE FIRST BID AT %d", amount.ClientID, amount.Amount)
-		log.Printf("THE AUCTION WILL BE ACTIVE FOR 1 MINUTE")
+		fmt.Print("THE AUCTION WILL BE ACTIVE FOR 1 MINUTE")
 		s.auctionisactive = true
 		s.time = time.NewTimer(1 * time.Minute)
 		go func() {
@@ -25,10 +25,7 @@ func (s *Server) Bid(ctx context.Context, amount *pb.Amount) (*pb.Ack, error) {
 			log.Printf("Client %d HAS WON WITH HIGHEST BID %d", s.ClientWithHighestbid, s.Highestbid)
 
 		}()
-		s.Highestbid = amount.Amount
-		s.ClientWithHighestbid = amount.ClientID
 
-		log.Printf("%d CURRENTLY HAS HIGHEST BID AT: %d", s.ClientWithHighestbid, s.Highestbid)
 	}
 
 	s.lamportstamp++
@@ -40,19 +37,15 @@ func (s *Server) Bid(ctx context.Context, amount *pb.Amount) (*pb.Ack, error) {
 		if bid > s.Highestbid {
 			s.Highestbid = bid
 			s.ClientWithHighestbid = s.clientID
-			log.Printf("Client %d has made a bid %d, at Lamport stamp %d, and it is now the highest bid", s.ClientWithHighestbid, s.lamportstamp, bid)
+			log.Printf("Client %d has made a bid %d, at Lamport stamp %d, and it is now the highest bid", s.ClientWithHighestbid, bid, s.lamportstamp)
 			response = fmt.Sprintf("Your bid %d has been received and you are now the highest bidder!.\n", bid)
 
-		}
-
-		if bid == s.Highestbid {
+		} else if bid == s.Highestbid {
 			log.Printf("CLIENT %d HAS MADE A BID %d , at Lamport stamp %d, WHICH IS EQUAL TO THE HIGHEST BID, SO IT DOES NOT COUNT", s.clientID, s.lamportstamp, bid)
 			log.Printf("%d CURRENTLY HOLDS HIGHEST BID AT: %d", s.ClientWithHighestbid, s.Highestbid)
 			response = fmt.Sprintf("YOUR BID %d HAS BEEN RECEIVED, YOUR BID WAS EQUAL TO THE HIGHEST, SO IT DOES NOT COUNT", bid)
 
-		}
-
-		if bid < s.Highestbid {
+		} else {
 			log.Printf("CLIENT %d HAS MADE A BID %d, at Lamport stamp%d, THE BID IS NOT HIGH ENOUGH", s.clientID, s.lamportstamp, bid)
 			log.Printf("%d CURRENTLY HOLDS HIGHEST BID AT: %d", s.ClientWithHighestbid, s.Highestbid)
 			response = fmt.Sprintf("YOUR BID %d WAS NOT HIGH ENOUGH PLEASE TRY AGAIN", bid)
