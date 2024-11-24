@@ -29,6 +29,15 @@ func main() {
 
 	ownport := int(*clientport) + 6000
 
+	logFile, err := os.OpenFile("../log.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatalf("Failed to open log file: %s", err)
+	}
+	defer logFile.Close() // Ensure the file is closed when the program ends
+
+	// Set the output of the log package to the log file
+	log.SetOutput(logFile)
+
 	client := &Client{
 		id:          int32(ownport),
 		servers:     make(map[int32]pb.AuctionClient),
@@ -47,6 +56,8 @@ func main() {
 		c := pb.NewAuctionClient(conn)
 		client.servers[port] = c
 	}
+
+	fmt.Printf("\n_____________________________________________________________\nWelcome to the AUCTION. You have the ID: %v.\nWrite 'result' and press ENTER to get info about the auction.\nWrite a number and press ENTER to send a BID.\n_____________________________________________________________\n", client.id)
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {

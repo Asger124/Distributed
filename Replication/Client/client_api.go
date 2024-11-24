@@ -34,7 +34,7 @@ func ClientBids(ctx context.Context, bid int32, c *Client) {
 
 	if c.responsecount == 0 {
 
-		log.Printf("No responses where provided servers have crashed")
+		log.Printf("NO RESPONSES WHERE PROVIDED SERVERS HAVE CRASHED")
 	}
 
 	length := uint32(len(c.servers))
@@ -44,22 +44,22 @@ func ClientBids(ctx context.Context, bid int32, c *Client) {
 
 		c.servercrash = ServersDown
 
-		log.Printf("Warning: %d/%d Servers did not respond", c.servercrash, length)
+		log.Printf("CLIENT %d --> WARNING: %d/%d SERVERS DID NOT RESPOND", c.id, c.servercrash, length)
 
 	}
 
 	if response.Ack == "" {
 
 		fmt.Printf("YOU RECEIVED NO RESPONSE FROM THE SERVICE. STANDBY WHILE WE CHECK THE SERVERS..\n")
-		log.Printf("Client %d GOT NO RESPONSE AT ALL. CHECKING SERVERS..", c.id)
+		log.Printf("CLIENT %d --> GOT NO RESPONSE AT ALL. CHECKING SERVERS..", c.id)
 		time.Sleep(2 * time.Second)
 		if c.servercrash == length {
 			fmt.Printf("ALL SERVERS ARE DOWN. AUCTION HAS BEEN CLOSED, NO WINNERS WAS FOUND\n")
-			log.Printf("CLIENT %d RECEIVED MESSAGE: ALL SERVERS ARE DOWN. AUCTION IS CLOSED AND NO WINNER WAS FOUND DUE TO CRASH", c.id)
+			log.Printf("CLIENT %d --> RECEIVED MESSAGE: ALL SERVERS ARE DOWN. AUCTION IS CLOSED AND NO WINNER WAS FOUND DUE TO CRASH", c.id)
 		}
 	} else {
 		fmt.Printf("RESPONSE FROM AUCTION: %v\n", response.Ack)
-		log.Printf("CLIENT %d REVEIVED RESPONSE FROM AUCTON: %v\n", c.id, response.Ack)
+		log.Printf("CLIENT %d --> REVEIVED RESPONSE: %v\n", c.id, response.Ack)
 	}
 
 }
@@ -87,7 +87,7 @@ func AskForState(ctx context.Context, c *Client) {
 
 	if c.responsecount == 0 {
 
-		log.Printf("No responses where provided servers have crashed")
+		log.Printf("CLIENT %d --> NO RESPONSES WHERE PROVIDED SERVERS HAVE CRASHED", c.id)
 	}
 
 	length := uint32(len(c.servers))
@@ -97,22 +97,22 @@ func AskForState(ctx context.Context, c *Client) {
 
 		c.servercrash = ServersDown
 
-		log.Printf("Warning: %d/%d Servers did not respond", c.servercrash, length)
+		log.Printf("CLIENT %d --> WARNING: %d/%d SERVERS DID NOT RESPOND", c.id, c.servercrash, length)
 
 	}
 
 	if response.Outcome == "" {
 
 		fmt.Printf("YOU RECEIVED NO RESPONSE FROM THE SERVICE. STANDBY WHILE WE CHECK THE SERVERS..\n")
-		log.Printf("Client %d GOT NO RESPONSE AT ALL. CHECKING SERVERS..", c.id)
+		log.Printf("CLIENT %d --> GOT NO RESPONSE AT ALL. CHECKING SERVERS..", c.id)
 		time.Sleep(2 * time.Second)
 		if c.servercrash == length {
 			fmt.Printf("ALL SERVERS ARE DOWN. AUCTION HAS BEEN CLOSED, NO WINNERS WAS FOUND\n")
-			log.Printf("CLIENT %d RECEIVED MESSAGE: ALL SERVERS ARE DOWN. AUCTION IS CLOSED AND NO WINNER WAS FOUND DUE TO CRASH", c.id)
+			log.Printf("CLIENT %d --> RECEIVED MESSAGE: ALL SERVERS ARE DOWN. AUCTION IS CLOSED AND NO WINNER WAS FOUND DUE TO CRASH", c.id)
 		}
 	} else {
 		fmt.Printf("RESPONSE FROM AUCTION: %v\n", response.Outcome)
-		log.Printf("CLIENT %d REVEIVED RESPONSE FROM AUCTON: %v\n", c.id, response.Outcome)
+		log.Printf("CLIENT %d --> REVEIVED RESPONSE FROM AUCTON: %v\n", c.id, response.Outcome)
 	}
 
 }
