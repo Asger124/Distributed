@@ -2,7 +2,7 @@
 
 This auction service uses a client-server archtecture and implements Active-replication in an Auction service. 
 In order to run the program you need to start three servers and at least one client.
-Servers will run on port 5000 + the id you enter in the terminal. Clients will run on port 6000 + the id.
+Servers will run on port 5001, 5002,5003. Clients will run on port 6000 + the id.
 All actions in the system will be logged in the log.txt file. The system is resilient to 2/3 server nodes crashing.
 
 **How to start servers**
@@ -14,7 +14,7 @@ All actions in the system will be logged in the log.txt file. The system is resi
 - type in following command: go run . -id 2
 - type in following command: go run . -id 3
 
-Note: servers cannot have the same id
+Note: Servers need to have id set as shown above - other ids than 1,2,3 will not work
 
 **How to run clients**
 - Ensure that three Servers are running
